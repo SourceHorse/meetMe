@@ -2,6 +2,8 @@
 
 > A Vue.js project
 
+requires src/config/config.js with an exported method returning the secret for decryption
+
 ## Build Setup
 
 ``` bash
@@ -16,3 +18,4 @@ npm run build
 ```
 
 For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
