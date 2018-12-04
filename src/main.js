@@ -9,8 +9,7 @@ const googleMapsKey = "U2FsdGVkX1+yxj/YsHGc6QLr0MZMZfcMbol596o5GBSab9uYuozpDqCME
 var CryptoJS = require("crypto-js");
 Vue.use(VueGoogleMaps, {
   load: {
-    key: CryptoJS.AES.decrypt(googleMapsKey, secret()).toString(CryptoJS.enc.Utf8),
-    libraries: "places"
+    key: CryptoJS.AES.decrypt(googleMapsKey, secret()).toString(CryptoJS.enc.Utf8)
   }
 });
 
