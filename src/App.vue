@@ -1,22 +1,27 @@
 <template>
   <div id="app">
     <GoogleMap/>
+    <PanTool v-on:submit="doPan"/>
   </div>
 </template>
 
 <script>
 import GoogleMap from './components/googleMap.vue'
+import PanTool from './components/panTool.vue'
 
 export default {
   components: {
-    GoogleMap
+    GoogleMap,
+    PanTool
   },
   name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+  methods: {
+      doPan: function(lat, long) {
+          console.log(lat + long);
+          GoogleMap.methods.PanTo(lat, long);
+      }
   }
+
 }
 </script>
 

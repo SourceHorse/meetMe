@@ -4,6 +4,7 @@
         :zoom="7"
         map-type-id="terrain"
         style="width: 100vw; height: 100vh"
+        ref="mapRef"
     >
         <GmapMarker
             :key="index"
@@ -17,11 +18,18 @@
 </template>
 
 <script>
+    var map;
     export default {
         mounted () {
-            this.$refs.mapRef.$mapPromise.then((map) => {
-                map.panTo({lat: 1.38, lng: 103.80})
+            this.$refs.mapRef.$mapPromise.then((mapObj) => {
+                mapObj.panTo({lat: 1.38, lng: 103.80});
+                map = mapObj;
             })
+        },
+        methods: {
+            PanTo(latitude, longitude) {
+                map.panTo({lat: latitude, lng: longitude})
+            }
         }
     }
 </script>
