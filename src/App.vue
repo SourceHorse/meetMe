@@ -17,8 +17,8 @@ export default {
   name: 'app',
   methods: {
       doPan: function(lat, long) {
-          console.log(lat + long);
           GoogleMap.methods.PanTo(lat, long);
+          GoogleMap.methods.SetUserMarker(lat, long);
       }
   }
 
