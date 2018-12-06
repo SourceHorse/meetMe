@@ -34,22 +34,25 @@ export default {
         },
         getUserLocation() {
             if (navigator.geolocation){
-                navigator.geolocation.getCurrentPosition(
-                    function success(position) {
-                        if (position.coords
-                            && position.coords.latitude
-                            && position.coords.longitude
-                            && position.timestamp){
-                                GoogleMap.methods.SetUserMarker(position.coords.latitude, position.coords.longitude)
-                                GoogleMap.methods.PanTo(position.coords.latitude, position.coords.longitude)
-                                return latLong;
-                            }
-                        return null
-                    },
-                    function error() {
-                        return null
+                var options = {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                };
+                function success(position) {
+                    if (position.coords
+                        && position.coords.latitude
+                        && position.coords.longitude){
+                        GoogleMap.methods.SetUserMarker(position.coords.latitude, position.coords.longitude)
+                        GoogleMap.methods.PanTo(position.coords.latitude, position.coords.longitude)
+                        return latLong;
                     }
-                )
+                    return null;
+                };
+                function error() {
+                    return null;
+                };
+                navigator.geolocation.getCurrentPosition(success, error, options);
             } else {
                 return null
             }
