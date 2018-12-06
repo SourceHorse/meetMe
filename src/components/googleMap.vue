@@ -18,17 +18,35 @@
 </template>
 
 <script>
+    import * as VueGoogleMaps from "vue2-google-maps"
+
     var map;
+    var userMarker;
+
     export default {
         mounted () {
             this.$refs.mapRef.$mapPromise.then((mapObj) => {
-                mapObj.panTo({lat: 1.38, lng: 103.80});
                 map = mapObj;
             })
         },
         methods: {
             PanTo(latitude, longitude) {
                 map.panTo({lat: latitude, lng: longitude})
+            },
+            SetUserMarker(latitude, longitude) {
+                userMarker = new google.maps.Marker({
+                    position: {lat: latitude, lng: longitude},
+                    map: map,
+                    title: 'my position',
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        fillColor: "#00FFFF",
+                        fillOpacity: 1,
+                        strokeColor: "#00CCCC",
+                        strokeWeight: 2,
+                        scale: 9
+                    }
+                });
             }
         }
     }

@@ -19,10 +19,10 @@
         },
         methods: {
             handleLatitudeInput(value) {
-                this.latitude = parseInt(value);
+                this.latitude = parseFloat(value);
             },
             handleLongitudeInput(value) {
-                this.longitude = parseInt(value);
+                this.longitude = parseFloat(value);
             },
             submit: function() {
                 this.$emit('submit', this.latitude, this.longitude)
