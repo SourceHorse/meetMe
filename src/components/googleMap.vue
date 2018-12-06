@@ -26,7 +26,6 @@
     export default {
         mounted () {
             this.$refs.mapRef.$mapPromise.then((mapObj) => {
-                mapObj.panTo({lat: 1.38, lng: 103.80});
                 map = mapObj;
             })
         },
