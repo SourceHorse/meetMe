@@ -6,14 +6,6 @@
         style="width: 100vw; height: 100vh"
         ref="mapRef"
     >
-        <GmapMarker
-            :key="index"
-            v-for="(m, index) in markers"
-            :position="m.position"
-            :clickable="true"
-            :draggable="true"
-            @click="center=m.position"
-        />
     </GmapMap>
 </template>
 
@@ -27,6 +19,7 @@
         mounted () {
             this.$refs.mapRef.$mapPromise.then((mapObj) => {
                 map = mapObj;
+                this.$emit("ready");
             })
         },
         methods: {

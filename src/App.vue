@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <GoogleMap/>
+    <GoogleMap v-on:ready="findUser"/>
     <PanTool v-on:submit="doPan"/>
     <MapToolbar v-on:center="centerOnPosition"/>
   </div>
@@ -22,9 +22,11 @@ export default {
     },
     name: 'app',
     mounted() {
-        this.getUserLocation();
     },
     methods: {
+        findUser: function() {
+            this.getUserLocation();
+        },
         doPan: function(lat, long) {
             GoogleMap.methods.PanTo(lat, long);
             GoogleMap.methods.SetUserMarker(lat, long);
@@ -45,7 +47,6 @@ export default {
                         && position.coords.longitude){
                         GoogleMap.methods.SetUserMarker(position.coords.latitude, position.coords.longitude)
                         GoogleMap.methods.PanTo(position.coords.latitude, position.coords.longitude)
-                        return latLong;
                     }
                     return null;
                 };
