@@ -2,7 +2,7 @@
   <div id="app">
     <GoogleMap v-on:ready="findUser"/>
     <PanTool v-on:submit="doPan"/>
-    <MapToolbar v-on:center="centerOnPosition"/>
+    <MapToolbar v-on:center="centerOnPosition" v-on:getMeetups="getMeetups"/>
   </div>
 </template>
 
@@ -10,9 +10,16 @@
 import GoogleMap from './components/googleMap.vue'
 import PanTool from './components/panTool.vue'
 import MapToolbar from './components/mapToolbar.vue'
-import googleMapVue from './components/googleMap.vue';
+import googleMapVue from './components/googleMap.vue'
+import MeetupApi from './services/meetupApi.js'
+import meetupApi from './services/meetupApi.js';
 
 var timer;
+
+var currentPosition = {
+    latitude: "",
+    longitude: ""
+}
 
 export default {
     components: {
@@ -34,6 +41,9 @@ export default {
         centerOnPosition: function() {
             this.getUserLocation()
         },
+        getMeetups: function() {
+            MeetupApi.methods.getMeetupsByLocation(currentPosition.latitude, currentPosition.longitude)
+        },
         getUserLocation() {
             if (navigator.geolocation){
                 var options = {
@@ -45,8 +55,12 @@ export default {
                     if (position.coords
                         && position.coords.latitude
                         && position.coords.longitude){
-                        GoogleMap.methods.SetUserMarker(position.coords.latitude, position.coords.longitude)
-                        GoogleMap.methods.PanTo(position.coords.latitude, position.coords.longitude)
+                            currentPosition.latitude = position.coords.latitude;
+                            currentPosition.longitude = position.coords.longitude;
+                            GoogleMap.methods.SetUserMarker(position.coords.latitude, position.coords.longitude);
+                            GoogleMap.methods.PanTo(position.coords.latitude, position.coords.longitude);
+                            var zoomLevel = GoogleMap.methods.GetZoom();
+                            if (zoomLevel < 13) GoogleMap.methods.SetZoom(13);
                     }
                     return null;
                 };

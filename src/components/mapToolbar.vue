@@ -1,7 +1,12 @@
 <template>
-    <button @click="center">
-        <span> center </span>
-    </button>
+    <div id="mapToolBar">
+        <button @click="center">
+            <span class="material-icons">gps_fixed</span>
+        </button>
+        <button @click="getMeetups">
+            <span class="material-icons">people</span>
+        </button>
+    </div>
 </template>
 
 <script>
@@ -9,17 +14,33 @@ export default {
     methods: {
         center: function() {
             this.$emit('center');
+        },
+        getMeetups: function() {
+            this.$emit('getMeetups');
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
+#mapToolBar {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    z-index: 10000;
+    background-color: rgba(20, 20, 20, 0.3);
+    padding: 15px;
+    border-radius: 0 10px 10px 0;
+
+    *{
+        display: block;
+        &:not(:last-child) {
+            margin-bottom: 15px;
+        }
+    }
+}
+
 button {
     padding: 5px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 10000;
 }
 </style>

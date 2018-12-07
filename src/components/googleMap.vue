@@ -3,8 +3,8 @@
         :center="{lat:36, lng:-79}"
         :zoom="7"
         map-type-id="terrain"
-        style="width: 100vw; height: 100vh"
         ref="mapRef"
+        id="GoogleMap"
     >
     </GmapMap>
 </template>
@@ -26,6 +26,12 @@
             PanTo(latitude, longitude) {
                 map.panTo({lat: latitude, lng: longitude})
             },
+            SetZoom(level) {
+                map.setZoom(level);
+            },
+            GetZoom() {
+                return map.getZoom();
+            },
             SetUserMarker(latitude, longitude) {
                 userMarker = new google.maps.Marker({
                     position: {lat: latitude, lng: longitude},
@@ -44,3 +50,12 @@
         }
     }
 </script>
+
+<style lang="scss" scoped>
+#GoogleMap {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+}
+</style>
