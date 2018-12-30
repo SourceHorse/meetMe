@@ -2,7 +2,7 @@
   <div id="app">
     <GoogleMap v-on:ready="findUser"/>
     <PanTool v-on:submit="doPan"/>
-    <MapToolbar v-on:center="centerOnPosition" v-on:getMeetups="getMeetups"/>
+    <MapToolbar v-on:center="centerOnPosition" v-on:getMeetups="getMeetups" v-on:clearMeetups="clearMeetups"/>
   </div>
 </template>
 
@@ -43,6 +43,7 @@ export default {
         getMeetups: function() {
             MeetupApi.methods.getMeetupsByLocation(currentPosition.latitude, currentPosition.longitude)
             .then(function(json) {
+                GoogleMap.methods.ClearMeetupMarkers();
                 if (json.hasOwnProperty('results')) {
                     var meetupsWithLatLong = json.results.filter(meetup => {
                         return meetup.hasOwnProperty("venue") 
@@ -56,6 +57,9 @@ export default {
             }).catch(function(ex) {
                 console.log('parsing failed', ex)
             })
+        },
+        clearMeetups: function() {
+            GoogleMap.methods.ClearMeetupMarkers();
         },
         consoleLog() {
             console.log("ping")

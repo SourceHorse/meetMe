@@ -13,7 +13,7 @@
     import * as VueGoogleMaps from "vue2-google-maps"
     var map;
     var userMarker;
-
+    var meetupMarkers = [];
     export default {
         mounted () {
             this.$refs.mapRef.$mapPromise.then((mapObj) => {
@@ -64,6 +64,11 @@
                         scale: 5
                     }
                 });
+                meetupMarkers.push(meetupMarker);
+            },
+            ClearMeetupMarkers() {
+                meetupMarkers.forEach(marker => marker.setMap(null));
+                meetupMarkers = [];
             }
         }
     }

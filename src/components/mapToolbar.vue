@@ -6,6 +6,9 @@
         <button @click="getMeetups">
             <span class="material-icons">people</span>
         </button>
+        <button @click="clearMeetups">
+            <span class="material-icons">clear</span>
+        </button>
     </div>
 </template>
 
@@ -17,6 +20,9 @@ export default {
         },
         getMeetups: function() {
             this.$emit('getMeetups');
+        },
+        clearMeetups: function() {
+            this.$emit('clearMeetups');
         }
     }
 }
