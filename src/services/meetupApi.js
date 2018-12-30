@@ -1,41 +1,39 @@
 import axios from 'axios'
 import config from '../config/config.js'
+import * as fetchjsonp from 'fetch-jsonp'
 var CryptoJS = require('crypto-js');
 
 const meetupApiKey = 'U2FsdGVkX1+UfPGPY0O+4MaM4huEoqE3r1BxmU0korHx3YtxFlUvAJ3a7R/tnO1VeuG1zlco9YBZcMkpr/n6ng==';
+const baseUrl = "https://api.meetup.com";
 
 export default {
     methods: {
         getMeetupsByLocation(lat, long, radius) {
             if(lat && long) {
                 var decryptedKey = CryptoJS.AES.decrypt(meetupApiKey, config.secret()).toString(CryptoJS.enc.Utf8);
-                var requestUrl = 'https://api.meetup.com/2/open_events?lat=' + lat + '&lon=' + long + '&key=' + decryptedKey + "&callback=parseResponse";
-                
-                let axiosConfig = {
-                    headers: {
-                        "Access-Control-Allow-Origin": "*",
-                        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
-                    }
-                  }
-                  
-                  let axiosData = {
-                    'HTTP_CONTENT_LANGUAGE': self.language
-                  }
-                
-                // return axios.get(requestUrl, axiosData, axiosConfig)
-                //             .then(response => console.log(response))
 
-
-
-                var xmlHttp = new XMLHttpRequest();
-                xmlHttp.onreadystatechange = function() { 
-                    if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-                        callback(xmlHttp.responseText);
+                var fetchOptions = {
+                    method: 'GET',
+                    mode: 'no-cors'
                 }
-                xmlHttp.open("GET", requestUrl, true);
-                xmlHttp.withCredentials = true;
-                xmlHttp.setRequestHeader("Content-Type", "application/json");
-                xmlHttp.send({"request": "authentication token"});
+
+                fetchjsonp(`${baseUrl}/2/open_events?lat=${lat}&lon=${long}&key=${decryptedKey}`, fetchOptions)
+                .then(function(response) {
+                    return response.json()
+                  }).then(function(json) {
+                    console.log('parsed json', json)
+                  }).catch(function(ex) {
+                    console.log('parsing failed', ex)
+                  })
+
+                // axios(`${baseUrl}/2/open_events?lat=${lat}&lon=${long}&key=${decryptedKey}`, {
+                //     method: "GET",
+                //     mode: "no-cors",
+                // }).then((response) => {
+                //     console.log(response);
+                // }).catch((e) => {
+                //     console.log(e);
+                // });
             }
         }
     }

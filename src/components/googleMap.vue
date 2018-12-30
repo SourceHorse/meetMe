@@ -37,7 +37,7 @@
                         userMarker = new google.maps.Marker({
                         position: {lat: latitude, lng: longitude},
                         map: map,
-                        title: 'my position',
+                        title: 'User Location',
                         icon: {
                             path: google.maps.SymbolPath.CIRCLE,
                             fillColor: "#00FFFF",
@@ -50,7 +50,6 @@
                 } else {
                     userMarker.setPosition({lat: latitude, lng: longitude})
                 }
-                
             }
         }
     }
