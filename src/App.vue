@@ -12,7 +12,6 @@ import PanTool from './components/panTool.vue'
 import MapToolbar from './components/mapToolbar.vue'
 import googleMapVue from './components/googleMap.vue'
 import MeetupApi from './services/meetupApi.js'
-import meetupApi from './services/meetupApi.js';
 
 var timer;
 
@@ -43,6 +42,26 @@ export default {
         },
         getMeetups: function() {
             MeetupApi.methods.getMeetupsByLocation(currentPosition.latitude, currentPosition.longitude)
+            .then(function(json) {
+                if (json.hasOwnProperty('results')) {
+                    var meetupsWithLatLong = json.results.filter(meetup => {
+                        return meetup.hasOwnProperty("venue") 
+                        && meetup.venue.hasOwnProperty("lat") 
+                        && meetup.venue.hasOwnProperty("lon")
+                        && meetup.venue.lat
+                        && meetup.venue.lon
+                    })
+                    meetupsWithLatLong.forEach(meetup => GoogleMap.methods.DrawMeetupMarker(meetup.venue.lat, meetup.venue.lon, meetup.name));
+                }
+            }).catch(function(ex) {
+                console.log('parsing failed', ex)
+            })
+        },
+        consoleLog() {
+            console.log("ping")
+        },
+        handleMeetupsResult(meetupsJson) {
+            console.log(meetupsJson)
         },
         getUserLocation() {
             if (navigator.geolocation){
