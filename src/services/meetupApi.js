@@ -5,7 +5,7 @@ var CryptoJS = require('crypto-js');
 
 const meetupApiKey = 'U2FsdGVkX1+UfPGPY0O+4MaM4huEoqE3r1BxmU0korHx3YtxFlUvAJ3a7R/tnO1VeuG1zlco9YBZcMkpr/n6ng==';
 const baseUrl = "https://api.meetup.com";
-const defaultRadiusMiles = 5;
+const defaultRadiusMiles = 15;
 
 export default {
     methods: {
