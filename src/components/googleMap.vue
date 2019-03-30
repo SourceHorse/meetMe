@@ -36,7 +36,7 @@
                         userMarker = new google.maps.Marker({
                         position: {lat: latitude, lng: longitude},
                         map: map,
-                        title: 'User Location',
+                        title: "User Location",
                         icon: {
                             path: google.maps.SymbolPath.CIRCLE,
                             fillColor: "#00FFFF",
@@ -51,19 +51,28 @@
                 }
             },
             DrawMeetupMarker(latitude, longitude, title) {
+                var icons = {
+                    meetUp: {
+                        icon: "/src/assets/meetup5050.png"
+                    }
+                }
                 var meetupMarker = new google.maps.Marker({
                     position: {lat: latitude, lng: longitude},
                     map: map,
                     title: title,
-                    icon: {
-                        path: google.maps.SymbolPath.CIRCLE,
-                        fillColor: "#FF0000",
-                        fillOpacity: 1,
-                        strokeColor: "#FF0000",
-                        strokeWeight: 0,
-                        scale: 5
-                    }
+                    icon: icons["meetUp"].icon
+                    // {
+                    //     path: google.maps.SymbolPath.CIRCLE,
+                    //     fillColor: "#FF0000",
+                    //     fillOpacity: 1,
+                    //     strokeColor: "#FF0000",
+                    //     strokeWeight: 0,
+                    //     scale: 5
+                    // }
                 });
+                meetupMarker.addListener("click", function() {
+                    console.log(meetupMarker.title);
+                })
                 meetupMarkers.push(meetupMarker);
             },
             ClearMeetupMarkers() {
