@@ -52,7 +52,7 @@ export default {
                         && meetup.venue.lat
                         && meetup.venue.lon
                     })
-                    meetupsWithLatLong.forEach(meetup => GoogleMap.methods.DrawMeetupMarker(meetup.venue.lat, meetup.venue.lon, meetup.name));
+                    meetupsWithLatLong.forEach(meetup => GoogleMap.methods.DrawMeetupMarker(meetup));
                 }
             }).catch(function(ex) {
                 console.log('parsing failed', ex)
